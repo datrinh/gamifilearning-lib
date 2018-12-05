@@ -62,7 +62,7 @@ const MaterialModules = [
   ],
   providers: [],
   bootstrap: [RootComponent],
-  exports: [RootComponent],
+  exports: [RootComponent, QuestionRoomComponent],
   entryComponents: [QuestionRoomComponent]
 })
 export class GLModule {}

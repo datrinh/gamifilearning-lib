@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
-import { JsonFeature } from '../shared/interfaces';
+import { JsonFeature, Question } from '../shared/interfaces';
 import { ENTROPY_INDEX } from '../shared/settings';
 
 @Component({
@@ -13,6 +13,10 @@ import { ENTROPY_INDEX } from '../shared/settings';
 export class QuestionRoomComponent implements OnInit {
   question = this.questionService;
   clicked = false;
+  activeIndex = 0;
+
+  @Input() texts: JsonFeature[];
+  @Input() questions: Question[];
 
   @ViewChild('selectionList')
   selection: MatSelectionList;
@@ -21,10 +25,12 @@ export class QuestionRoomComponent implements OnInit {
     private gamification: GamificationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.texts, this.questions);
+  }
 
   isDone() {
-    return !(this.question.activeTextIndex < this.question.numberOfTexts);
+    return !(this.activeIndex < this.texts.length);
   }
 
   submitAnswer(currentText: JsonFeature) {
@@ -35,5 +41,6 @@ export class QuestionRoomComponent implements OnInit {
     });
     this.question.handleSubmittedAnswers(answers);
     console.log(currentText);
+    this.activeIndex++;
   }
 }

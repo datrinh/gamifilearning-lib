@@ -24,17 +24,7 @@ export class QuestionService {
   private texts = new BehaviorSubject([]);
   texts$ = this.texts.asObservable();
 
-  constructor(private communication: CommunicationService) {
-    if (this.communication.data === []) {
-      this.communication.loadData().subscribe((res: JsonFeature[]) => {
-        this.textsStore = this.getTopInstances(res);
-        this.texts.next(this.textsStore);
-      });
-    } else {
-      this.textsStore = this.getTopInstances(this.communication.data);
-      this.texts.next(this.textsStore);
-    }
-  }
+  constructor(private communication: CommunicationService) {}
 
   getUnlabeledInstances(data: JsonFeature[] = this.data): JsonFeature[] {
     return data.filter(feature => feature.features[1][UNLABELED_INDEX] != null);
@@ -56,6 +46,11 @@ export class QuestionService {
       .slice(0, number);
   }
 
+  startLearning(features) {
+    this.textsStore = this.getTopInstances(features);
+    this.texts.next(this.textsStore);
+  }
+
   getTextByIndex(index: number): JsonFeature {
     return this.textsStore[index];
   }
@@ -63,8 +58,8 @@ export class QuestionService {
   handleSubmittedAnswers(selectedAnswers: string[]): void {
     this.addAnswersToTexts(selectedAnswers);
     // fake score inc
-    this.texts.next(this.textsStore);
-    this.activeTextIndex++;
+    // this.texts.next(this.textsStore);
+    // this.activeTextIndex++;
     this.updateProgress();
   }
 
