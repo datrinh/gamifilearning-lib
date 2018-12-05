@@ -1,0 +1,53 @@
+<section class="content">
+  <div class="progressbar-container">
+    <span class="progress-label"
+      >{{ question.activeTextIndex }} / {{ question.numberOfTexts }}</span
+    >
+    <mat-progress-bar
+      mode="determinate"
+      value="{{question.progress$ | async}}"
+    ></mat-progress-bar>
+  </div>
+
+  <mat-card class="text-card">
+    <p *ngIf="!isDone(); else: done">
+      {{ ((question.texts$ | async)[question.activeTextIndex]?.values)[7] }}
+    </p>
+    <ng-template #done>
+      <div
+        *ngIf="!clicked; else: charts"
+        class="spinner-container"
+        (click)="clicked = true"
+      >
+        <mat-spinner></mat-spinner>
+        <p>Verarbeite Daten...</p>
+      </div>
+    </ng-template>
+
+    <ng-template #charts>
+      <!-- <app-chart></app-chart> -->
+      <img
+        src="https://media.giphy.com/media/nEMmyUp4hl1QOzovKh/giphy.gif"
+        alt="Thanks!"
+      />
+    </ng-template>
+  </mat-card>
+
+  <mat-card class="question-card" *ngIf="!isDone()">
+    <mat-selection-list #selectionList>
+      <mat-list-option *ngFor="let q of question.questions" value="{{q.id}}">
+        {{ q.label }}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card>
+
+  <button
+    *ngIf="!isDone()"
+    mat-raised-button
+    class="submit-button"
+    (click)="submitAnswer(question.getTextByIndex(question.activeTextIndex))"
+    color="primary"
+  >
+    Weiter
+  </button>
+</section>
