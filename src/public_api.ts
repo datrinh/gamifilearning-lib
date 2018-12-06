@@ -12,3 +12,4 @@ export * from './lib/dashboard/dashboard.component';
 export * from './lib/shared/communication.service';
 export * from './lib/shared/question.service';
 export * from './lib/shared/user.service';
+export * from './lib/shared/interfaces';

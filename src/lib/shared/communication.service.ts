@@ -16,22 +16,11 @@ import { HttpClient } from '@angular/common/http';
 export class CommunicationService {
   data: JsonFeature[] = [];
   constructor(private http: HttpClient) {}
-
   loadData(src: string = URL_TO_DATA): Observable<JsonFeature[]> {
     return this.http
       .get<JsonFeature[]>(URL_TO_DATA)
       .pipe(map(res => this.enhanceFeatures(res)));
   }
-
-  getData() {
-    console.log(this.data);
-    return this.data;
-  }
-
-  setData(data) {
-    this.data = data;
-  }
-
   enhanceFeatures(data: JsonFeature[]): JsonFeature[] {
     const features = data;
     for (let i = 0; i < features.length / 2; i++) {
