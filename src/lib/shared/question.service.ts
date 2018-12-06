@@ -13,8 +13,8 @@ export class QuestionService {
     { id: 'event', label: 'Geht es um eine Veranstaltung?' }
   ];
   answers: Answer[] = [];
-  activeTextIndex = 0;
-  numberOfTexts = NUMBER_OF_TEXTS;
+  // activeTextIndex = 0;
+  // numberOfTexts = NUMBER_OF_TEXTS;
   data: JsonFeature[] = [];
 
   private progress = new BehaviorSubject(0);
@@ -31,8 +31,8 @@ export class QuestionService {
   }
 
   getTopInstances(
-    data: JsonFeature[] = this.data,
-    number: number = this.numberOfTexts
+    data: JsonFeature[],
+    number: number = NUMBER_OF_TEXTS
   ): JsonFeature[] {
     const unlabeled = this.getUnlabeledInstances(data);
     return unlabeled
@@ -55,30 +55,34 @@ export class QuestionService {
     return this.textsStore[index];
   }
 
-  handleSubmittedAnswers(selectedAnswers: string[]): void {
-    this.addAnswersToTexts(selectedAnswers);
-    // fake score inc
-    // this.texts.next(this.textsStore);
-    // this.activeTextIndex++;
-    this.updateProgress();
-  }
-
-  private addAnswersToTexts(selectedAnswers) {
-    // push a new empty element to avoid undefined
-    this.answers.push({ id: this.activeTextIndex, answers: {} });
-    // fill out answers for each question
-    this.questions.forEach(question => {
-      if (selectedAnswers.find(x => x === question.id)) {
-        this.answers[this.activeTextIndex].answers[question.id] = true;
-      } else {
-        this.answers[this.activeTextIndex].answers[question.id] = false;
-      }
-    });
+  handleSubmittedAnswers(
+    selectedAnswers: string[],
+    feature: JsonFeature
+  ): void {
+    this.answers = [
+      ...this.answers,
+      this.createAnswers(selectedAnswers, feature.id)
+    ];
     console.log(this.answers);
   }
 
-  private updateProgress(): void {
-    this.progress.next((this.activeTextIndex / this.numberOfTexts) * 100);
-    console.log(this.progress.value);
+  private createAnswers(selectedAnswers: string[], id: number): Answer {
+    // push a new empty element to avoid undefined
+    const answer: Answer = {
+      featureId: id,
+      answers: {}
+    };
+    // fill out answers for each question
+
+    this.questions.forEach(question => {
+      if (
+        selectedAnswers.find(selectedAnswer => selectedAnswer === question.id)
+      ) {
+        answer.answers[question.id] = true;
+      } else {
+        answer.answers[question.id] = false;
+      }
+    });
+    return answer;
   }
 }

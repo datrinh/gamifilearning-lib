@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
-import { JsonFeature, Question } from '../shared/interfaces';
+import { JsonFeature, Question, Answer } from '../shared/interfaces';
 import { ENTROPY_INDEX } from '../shared/settings';
 
 @Component({
@@ -29,18 +29,18 @@ export class QuestionRoomComponent implements OnInit {
     console.log(this.texts, this.questions);
   }
 
-  isDone() {
+  isDone(): boolean {
     return !(this.activeIndex < this.texts.length);
   }
 
-  submitAnswer(currentText: JsonFeature) {
-    this.gamification.increaseScore(currentText.features[1][ENTROPY_INDEX]);
-    const answers: string[] = [];
+  submitAnswer(currentFeature: JsonFeature) {
+    this.gamification.increaseScore(currentFeature.features[1][ENTROPY_INDEX]);
+    // Simple array with all selected answers
+    const selectedAnswers: string[] = [];
     this.selection.selectedOptions.selected.forEach(selected => {
-      answers.push(selected.value);
+      selectedAnswers.push(selected.value);
     });
-    this.question.handleSubmittedAnswers(answers);
-    console.log(currentText);
+    this.question.handleSubmittedAnswers(selectedAnswers, currentFeature);
     this.activeIndex++;
   }
 }

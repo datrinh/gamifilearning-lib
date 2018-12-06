@@ -15,7 +15,7 @@ export interface Question {
 }
 
 export interface Answer {
-  id: number;
+  featureId: number;
   answers: {
     [key: string]: boolean;
   };

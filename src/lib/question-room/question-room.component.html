@@ -3,7 +3,7 @@
     <span class="progress-label">{{ activeIndex }} / {{ texts.length }}</span>
     <mat-progress-bar
       mode="determinate"
-      value="{{question.progress$ | async}}"
+      value="{{activeIndex / texts.length *100}}"
     ></mat-progress-bar>
   </div>
 
