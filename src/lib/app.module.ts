@@ -27,6 +27,7 @@ import { QuestionRoomComponent } from './question-room/question-room.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ChartComponent } from './chart/chart.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ScoreDisplayComponent } from './score-display/score-display.component';
 
 const MaterialModules = [
   MatInputModule,
@@ -51,7 +52,8 @@ const MaterialModules = [
     LeaderboardComponent,
     QuestionRoomComponent,
     NavbarComponent,
-    ChartComponent
+    ChartComponent,
+    ScoreDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,7 @@ const MaterialModules = [
   ],
   providers: [],
   bootstrap: [RootComponent],
-  exports: [RootComponent, QuestionRoomComponent],
+  exports: [RootComponent, QuestionRoomComponent, ScoreDisplayComponent],
   entryComponents: [QuestionRoomComponent]
 })
 export class GLModule {}

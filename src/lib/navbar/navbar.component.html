@@ -1,12 +1,7 @@
 <mat-toolbar color="primary">
   <span class="spacer"></span>
 
-  <mat-icon class="icon-with-label" [@scoreChange]="gamification.score$ | async"
-    >star</mat-icon
-  >
-  <span [@scoreChange]="gamification.score$ | async">
-    {{ gamification.score$ | async }}</span
-  >
+  <gl-score-display></gl-score-display>
   <button class="toolbar-item" mat-icon-button>
     <mat-icon matBadge="4" matBadgeColor="accent">person</mat-icon>
   </button>
