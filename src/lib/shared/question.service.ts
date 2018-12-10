@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CommunicationService } from './communication.service.js';
 import { JsonFeature, Question, Answer } from './interfaces.js';
-import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from './settings.js';
+import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from './config.js';
+
+
+export const QUESTIONS = [
+  { id: 'music', label: 'Hat der Text Musikbezug?' },
+  { id: 'event', label: 'Geht es um eine Veranstaltung?' }
+];
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  questions: Question[] = [
-    { id: 'music', label: 'Hat der Text Musikbezug?' },
-    { id: 'event', label: 'Geht es um eine Veranstaltung?' }
-  ];
+  questions: Question[] = QUESTIONS;
   answers: Answer[] = [];
   // activeTextIndex = 0;
   // numberOfTexts = NUMBER_OF_TEXTS;

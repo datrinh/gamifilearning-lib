@@ -7,7 +7,7 @@ import {
   UNLABELED_INDEX,
   ENTROPY_INDEX,
   URL_TO_DATA
-} from './settings';
+} from './config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -3,7 +3,7 @@ import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
 import { JsonFeature, Question, Answer } from '../shared/interfaces';
-import { ENTROPY_INDEX } from '../shared/settings';
+import { ENTROPY_INDEX } from '../shared/config';
 
 @Component({
   selector: 'gl-question-room',
