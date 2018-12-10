@@ -1,6 +1,4 @@
-<mat-icon
-  [@scoreChange]="gamification.score$ | async">
-  star</mat-icon>
-<span [@scoreChange]="gamification.score$ | async">
-  {{ gamification.score$ | async }}
-</span>
+<div class="align-vert" [@scoreChange]="gamification.score$ | async">
+  <mat-icon>star</mat-icon>
+  <span>{{ gamification.score$ | async }}</span>
+</div>
