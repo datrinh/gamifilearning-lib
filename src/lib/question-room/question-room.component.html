@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" *ngIf="texts">
   <div class="progressbar-container">
     <span class="progress-label">{{ activeIndex }} / {{ texts.length }}</span>
     <mat-progress-bar
@@ -8,7 +8,7 @@
   </div>
 
   <mat-card class="text-card">
-    <p *ngIf="!isDone(); else: done">{{ texts[activeIndex]?.values[7] }}</p>
+    <p *ngIf="!isDone(); else: done">{{ texts[activeIndex].values[7] }}</p>
     <ng-template #done>
       <div
         *ngIf="!clicked; else: charts"
