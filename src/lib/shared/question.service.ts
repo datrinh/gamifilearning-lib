@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CommunicationService } from './communication.service.js';
-import { JsonFeature, Question, Answer } from './interfaces.js';
+import { JsonFeature, Question, Answer } from './data.interface.js';
 import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from './config.js';
 
 
 export const QUESTIONS = [
-  { id: 'music', label: 'Hat der Text Musikbezug?' },
-  { id: 'event', label: 'Geht es um eine Veranstaltung?' }
+  { id: 'music', label: 'Hat der Text Musikbezug?', customerId: 'gema' },
+  { id: 'event', label: 'Geht es um eine Veranstaltung?', customerId: 'gema' }
 ];
 
 @Injectable({

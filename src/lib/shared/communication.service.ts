@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JsonFeature } from './interfaces';
+import { JsonFeature } from './data.interface';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {

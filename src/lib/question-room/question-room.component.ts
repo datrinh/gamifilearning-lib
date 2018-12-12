@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
-import { JsonFeature, Question, Answer } from '../shared/interfaces';
+import { JsonFeature, Question, Answer } from '../shared/data.interface';
 import { ENTROPY_INDEX } from '../shared/config';
 
 @Component({
