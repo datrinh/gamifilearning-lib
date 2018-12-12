@@ -29,7 +29,7 @@ export interface DataObject {
   position: {
     x: number;
     y: number;
-  }
+  };
   isLabeled: boolean;
   selectionScore: number;
   // ! Breaking with glyphboards currently irritating naming convention
@@ -46,14 +46,15 @@ export interface DataSet {
   datasetId: string;
   metricss: {
     [key: string]: number;
-  }
+  };
 }
 
-/** (Single) labeled data to be sent to backend */
+// This if the case if we send after each answer
+/** (Single) labeled answer to be sent to backend */
 export interface LabelOutput {
   dataObjectId: string;
-  dataSetId: string
-  userId: string
+  dataSetId: string; // redundant?
+  userId: string;
   questionId: string;
   customerId: string;
   /** Options might change in the future */

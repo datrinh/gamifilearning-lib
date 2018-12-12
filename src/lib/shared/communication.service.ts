@@ -7,7 +7,7 @@ import {
   UNLABELED_INDEX,
   ENTROPY_INDEX,
   URL_TO_DATA
-} from './config';
+} from '../config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -21,6 +21,8 @@ export class CommunicationService {
       .get<JsonFeature[]>(URL_TO_DATA)
       .pipe(map(res => this.enhanceFeatures(res)));
   }
+
+  /** Mocking data to add unlabeled data and selectionScore (entropy) */
   enhanceFeatures(data: JsonFeature[]): JsonFeature[] {
     const features = data;
     for (let i = 0; i < features.length / 2; i++) {

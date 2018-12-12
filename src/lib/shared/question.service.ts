@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CommunicationService } from './communication.service.js';
 import { JsonFeature, Question, Answer } from './data.interface.js';
-import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from './config.js';
-
+import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from '../config.js';
 
 export const QUESTIONS = [
   { id: 'music', label: 'Hat der Text Musikbezug?', customerId: 'gema' },
@@ -16,8 +15,6 @@ export const QUESTIONS = [
 export class QuestionService {
   questions: Question[] = QUESTIONS;
   answers: Answer[] = [];
-  // activeTextIndex = 0;
-  // numberOfTexts = NUMBER_OF_TEXTS;
   data: JsonFeature[] = [];
 
   private progress = new BehaviorSubject(0);
@@ -33,6 +30,11 @@ export class QuestionService {
     return data.filter(feature => feature.features[1][UNLABELED_INDEX] != null);
   }
 
+  /**
+   * Return top scoring data objects
+   * @param data corresponding data set
+   * @param number number of instances to return
+   */
   getTopInstances(
     data: JsonFeature[],
     number: number = NUMBER_OF_TEXTS
