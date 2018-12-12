@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CommunicationService } from './communication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,5 +7,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
   userId: string;
 
-  constructor() {}
+  constructor(private communication: CommunicationService) {}
+
+  login(password: string) {}
 }
