@@ -26,6 +26,8 @@ export interface Answer {
 export interface DataObject {
   id: string;
   text: string;
+  questions: Question[];
+  // TODO: Glyphboard handles this in separate positions file
   position: {
     x: number;
     y: number;
@@ -42,7 +44,6 @@ export interface DataObject {
 /** Data set returned from backend */
 export interface DataSet {
   dataObjects: DataObject[];
-  questions: Question[];
   datasetId: string;
   metricss: {
     [key: string]: number;

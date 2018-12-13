@@ -4,13 +4,17 @@ import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+export interface User {
+  id: number;
+  username: string;
+  jwtToken: { token: string };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  user;
-  userId: string;
-  private token = null;
+  user: User;
 
   constructor(private apollo: Apollo) {}
 
@@ -33,33 +37,31 @@ export class UserService {
       })
       .subscribe((res: any) => {
         this.user = res.data.login;
-        // this.userId = user.id;
-        // this.token = user.jwtToken.token;
+        window.localStorage.setItem('token', this.user.jwtToken.token);
         console.log(this.user);
       });
   }
 
   logout(): void {
-    this.apollo.query({
-      query: gql`
-        {
-          logout()
-        }
-      `
-    });
-  }
-
-  islogged(): Observable<boolean> {
-    return this.apollo
+    this.apollo
       .query({
         query: gql`
           {
-            me {
-              active
-            }
+            logout
           }
         `
       })
-      .pipe(map((res: any) => res.data.active));
+      .subscribe(
+        _ => {
+          window.localStorage.removeItem('token');
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  isLogged(): boolean {
+    return window.localStorage.getItem('token') ? true : false;
   }
 }

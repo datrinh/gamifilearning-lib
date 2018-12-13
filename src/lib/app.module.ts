@@ -28,6 +28,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ChartComponent } from './chart/chart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScoreDisplayComponent } from './score-display/score-display.component';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
 
 const MaterialModules = [
   MatInputModule,
@@ -53,18 +55,25 @@ const MaterialModules = [
     QuestionRoomComponent,
     NavbarComponent,
     ChartComponent,
-    ScoreDisplayComponent
+    ScoreDisplayComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModules,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
     // NgxChartsModule
   ],
   providers: [],
   bootstrap: [RootComponent],
-  exports: [RootComponent, QuestionRoomComponent, ScoreDisplayComponent],
+  exports: [
+    RootComponent,
+    QuestionRoomComponent,
+    ScoreDisplayComponent,
+    LoginComponent
+  ],
   entryComponents: [QuestionRoomComponent]
 })
 export class GLModule {}
