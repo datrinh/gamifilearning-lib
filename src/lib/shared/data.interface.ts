@@ -45,9 +45,14 @@ export interface DataObject {
 export interface DataSet {
   dataObjects: DataObject[];
   datasetId: string;
-  metricss: {
-    [key: string]: number;
-  };
+  metrics: [
+    {
+      versionId: string;
+      metrics: {
+        [key: string]: number;
+      };
+    }
+  ];
 }
 
 // This if the case if we send after each answer
@@ -60,11 +65,4 @@ export interface LabelOutput {
   customerId: string;
   /** Options might change in the future */
   answer: 'yes' | 'no' | 'maybe';
-  // labelCandidates: LabelCandidate[];
 }
-
-// export interface LabelCandidate {
-//   customerId: string;
-//   answer: string;
-//   questionId: string;
-// }

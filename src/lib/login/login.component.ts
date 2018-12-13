@@ -10,12 +10,16 @@ import { MESLISPW, MESLISUSER } from '../config';
 export class LoginComponent implements OnInit {
   username = MESLISUSER;
   password = MESLISPW;
+  showSpinner = false;
 
   constructor(private user: UserService) {}
 
   ngOnInit() {}
 
   login() {
-    this.user.login(this.username, this.password);
+    this.showSpinner = true;
+    this.user.login(this.username, this.password).subscribe(res => {
+      this.showSpinner = false;
+    });
   }
 }

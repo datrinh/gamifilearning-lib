@@ -18,8 +18,8 @@ export class UserService {
 
   constructor(private apollo: Apollo) {}
 
-  login(username: string, password: string): void {
-    this.apollo
+  login(username: string, password: string): Observable<User> {
+    return this.apollo
       .query({
         query: gql`
           {
@@ -35,11 +35,13 @@ export class UserService {
           }
         `
       })
-      .subscribe((res: any) => {
-        this.user = res.data.login;
-        window.localStorage.setItem('token', this.user.jwtToken.token);
-        console.log(this.user);
-      });
+      .pipe(
+        map((res: any) => {
+          this.user = res.data.login;
+          window.localStorage.setItem('token', this.user.jwtToken.token);
+          return this.user;
+        })
+      );
   }
 
   logout(): void {
