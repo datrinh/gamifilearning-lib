@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { CommunicationService } from './communication.service.js';
-import { JsonFeature, Question, Answer } from './data.interface.js';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {
+  CommunicationService,
+  BackendResponse
+} from './communication.service.js';
+import {
+  JsonFeature,
+  Question,
+  Answer,
+  DataObject,
+  ObjectToLabel
+} from './data.interface.js';
 import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from '../config.js';
 
 export const QUESTIONS = [
@@ -17,6 +26,9 @@ export class QuestionService {
   answers: Answer[] = [];
   data: JsonFeature[] = [];
 
+  private currentInstance = new Subject<BackendResponse>();
+  currentInstance$ = this.currentInstance.asObservable();
+
   private progress = new BehaviorSubject(0);
   progress$ = this.progress.asObservable();
 
@@ -24,10 +36,18 @@ export class QuestionService {
   private texts = new BehaviorSubject([]);
   texts$ = this.texts.asObservable();
 
-  constructor(private communication: CommunicationService) {}
+  constructor(private communication: CommunicationService) {
+    this.updateNextInstance();
+  }
 
   getUnlabeledInstances(data: JsonFeature[] = this.data): JsonFeature[] {
     return data.filter(feature => feature.features[1][UNLABELED_INDEX] != null);
+  }
+
+  updateNextInstance() {
+    this.communication.getNextInstance().subscribe(instance => {
+      this.currentInstance.next(instance);
+    });
   }
 
   /**
@@ -60,34 +80,36 @@ export class QuestionService {
     return this.textsStore[index];
   }
 
-  handleSubmittedAnswers(
-    selectedAnswers: string[],
-    feature: JsonFeature
-  ): void {
-    this.answers = [
-      ...this.answers,
-      this.createAnswers(selectedAnswers, feature.id)
-    ];
-    console.log(this.answers);
-  }
+  handleSubmittedAnswers(selectedAnswers: string[], featureId: number) {}
 
-  private createAnswers(selectedAnswers: string[], id: number): Answer {
-    // push a new empty element to avoid undefined
-    const answer: Answer = {
-      featureId: id,
-      answers: {}
-    };
-    // fill out answers for each question
+  // handleSubmittedAnswers(
+  //   selectedAnswers: string[],
+  //   feature: JsonFeature
+  // ): void {
+  //   this.answers = [
+  //     ...this.answers,
+  //     this.createAnswers(selectedAnswers, feature.id)
+  //   ];
+  //   console.log(this.answers);
+  // }
 
-    this.questions.forEach(question => {
-      if (
-        selectedAnswers.find(selectedAnswer => selectedAnswer === question.id)
-      ) {
-        answer.answers[question.id] = true;
-      } else {
-        answer.answers[question.id] = false;
-      }
-    });
-    return answer;
-  }
+  // private createAnswers(selectedAnswers: string[], id: number): Answer {
+  //   // push a new empty element to avoid undefined
+  //   const answer: Answer = {
+  //     featureId: id,
+  //     answers: {}
+  //   };
+  //   // fill out answers for each question
+
+  //   this.questions.forEach(question => {
+  //     if (
+  //       selectedAnswers.find(selectedAnswer => selectedAnswer === question.id)
+  //     ) {
+  //       answer.answers[question.id] = true;
+  //     } else {
+  //       answer.answers[question.id] = false;
+  //     }
+  //   });
+  //   return answer;
+  // }
 }

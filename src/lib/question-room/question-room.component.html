@@ -1,14 +1,14 @@
-<section class="content" *ngIf="texts">
+<section class="content" *ngIf="currentInstance">
   <div class="progressbar-container">
-    <span class="progress-label">{{ activeIndex }} / {{ texts.length }}</span>
+    <span class="progress-label">{{ activeIndex }} / {{ maxProgress }}</span>
     <mat-progress-bar
       mode="determinate"
-      value="{{activeIndex / texts.length *100}}"
+      value="{{activeIndex / maxProgress *100}}"
     ></mat-progress-bar>
   </div>
 
   <mat-card class="text-card">
-    <p *ngIf="!isDone(); else: done">{{ texts[activeIndex].values[7] }}</p>
+    <p *ngIf="!isDone(); else: done">{{ currentInstance.text }}</p>
     <ng-template #done>
       <div
         *ngIf="!clicked; else: charts"
@@ -30,20 +30,31 @@
   </mat-card>
 
   <mat-card class="question-card" *ngIf="!isDone()">
-    <mat-selection-list #selectionList>
-      <mat-list-option *ngFor="let q of questions" value="{{q.id}}">
-        {{ q.label }}
-      </mat-list-option>
-    </mat-selection-list>
+    <!--
+      <div *ngFor="let q of currentInstance.toBeLabeled[currentQuestion]">
+    -->
+    {{ currentInstance.toBeLabeled[currentQuestion].question.questionId }}
+    <button
+      *ngFor="
+        let answer of currentInstance.toBeLabeled[currentQuestion].question
+          .possibleAnswers
+      "
+      (click)="submitAnswer(answer)"
+    >
+      {{ answer }}
+    </button>
+    <!-- </div> -->
   </mat-card>
 
-  <button
-    *ngIf="!isDone()"
-    mat-raised-button
-    class="submit-button"
-    (click)="submitAnswer(texts[activeIndex])"
-    color="primary"
-  >
-    Weiter
-  </button>
+  <!--
+    <button
+      *ngIf="!isDone()"
+      mat-raised-button
+      class="submit-button"
+      (click)="submitAnswer()"
+      color="primary"
+    >
+      Weiter
+    </button>
+  -->
 </section>

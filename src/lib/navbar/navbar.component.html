@@ -13,5 +13,11 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item disabled>Kontostand</button>
   <button mat-menu-item disabled>Katzenvideos</button>
-  <button mat-menu-item (click)="user.logout()">Logout</button>
+  <button
+    mat-menu-item
+    routerLinkActive="router-link-active"
+    (click)="user.logout()"
+  >
+    Logout
+  </button>
 </mat-menu>

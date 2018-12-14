@@ -6,7 +6,6 @@ export * from './lib/app.module';
 export * from './lib/app.component';
 export * from './lib/question-room/question-room.component';
 export * from './lib/score-display/score-display.component';
-export * from './lib/login/login.component';
 export * from './lib/navbar/navbar.component';
 export * from './lib/leaderboard/leaderboard.component';
 export * from './lib/chart/chart.component';

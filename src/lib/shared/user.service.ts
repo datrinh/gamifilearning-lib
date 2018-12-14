@@ -3,6 +3,7 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface User {
   id: number;
@@ -16,7 +17,7 @@ export interface User {
 export class UserService {
   user: User;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo, private router: Router) {}
 
   login(username: string, password: string): Observable<User> {
     return this.apollo
@@ -56,6 +57,7 @@ export class UserService {
       .subscribe(
         _ => {
           window.localStorage.removeItem('token');
+          this.router.navigate(['/']);
         },
         err => {
           console.error(err);

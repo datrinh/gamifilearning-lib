@@ -16,29 +16,48 @@ export interface Question {
 }
 
 export interface Answer {
-  featureId: number;
-  answers: {
-    [key: string]: boolean;
-  };
+  timestamp: string;
+  featureId: string; // is 1 to 1 with questionId?
+  userId: string;
+  customerId: string;
+  questionId: string;
+  answer: string;
 }
 
 /** Single data object */
 export interface DataObject {
-  id: string;
-  text: string;
-  questions: Question[];
+  objectId: string;
   // TODO: Glyphboard handles this in separate positions file
   position: {
     x: number;
     y: number;
   };
-  isLabeled: boolean;
   selectionScore: number;
   // ! Breaking with glyphboards currently irritating naming convention
   /** Numeric Value of a feature */
   featureValues: { [key: string]: number };
   /** Human readable representation of feature */
   featureRepresentations: { [key: string]: string };
+}
+
+export interface ObjectToLabel {
+  versionId: string;
+  questionIds: string[];
+  toBeLabeledFeatures: string[];
+  isLabeledBy: string[];
+  shownFeatures: string[];
+  dataObject: DataObject;
+}
+
+export interface FeaturesQuestionMapping {
+  questionId: string;
+  possibleAnswers: string[];
+}
+
+export interface LabeledData {
+  objectId: number;
+  labellingFinished: boolean;
+  answers: Answer[];
 }
 
 /** Data set returned from backend */

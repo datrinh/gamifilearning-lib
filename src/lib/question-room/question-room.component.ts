@@ -2,8 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
-import { JsonFeature, Question, Answer } from '../shared/data.interface';
+import {
+  JsonFeature,
+  Question,
+  Answer,
+  ObjectToLabel
+} from '../shared/data.interface';
 import { ENTROPY_INDEX } from '../config';
+import { BackendResponse } from '../shared/communication.service';
 
 @Component({
   selector: 'gl-question-room',
@@ -11,36 +17,76 @@ import { ENTROPY_INDEX } from '../config';
   styleUrls: ['./question-room.component.scss']
 })
 export class QuestionRoomComponent implements OnInit {
-  question = this.questionService;
   clicked = false;
-  activeIndex = 0;
+  currentQuestion = 0;
+  // activeIndex = 0;
 
-  @Input() texts: JsonFeature[];
-  @Input() questions: Question[];
+  // @Input() texts: JsonFeature[];
+  // @Input() questions: Question[];
+  @Input() maxProgress;
+  activeIndex = 0;
+  @Input() currentInstance: BackendResponse;
+
+  numberOfQuestions;
 
   @ViewChild('selectionList')
   selection: MatSelectionList;
   constructor(
-    private questionService: QuestionService,
+    private question: QuestionService,
     private gamification: GamificationService
   ) {}
 
   ngOnInit() {
-    console.log(this.texts, this.questions);
+    console.log(
+      this.currentInstance,
+      this.currentQuestion,
+      this.numberOfQuestions
+    );
+    this.question.currentInstance$.subscribe(instance => {
+      // if (instance) {
+      this.currentInstance = instance;
+      this.numberOfQuestions = this.currentInstance.toBeLabeled.length;
+      // }
+    });
+    // console.log(this.texts, this.questions);
   }
 
   isDone(): boolean {
-    return !(this.activeIndex < this.texts.length);
+    return !(this.activeIndex < this.maxProgress);
   }
 
-  submitAnswer(currentFeature: JsonFeature) {
-    this.gamification.increaseScore(currentFeature.features[1][ENTROPY_INDEX]);
+  getNext() {
+    this.question.updateNextInstance();
+  }
+
+  answerQuestion() {
+    console.log(
+      this.currentInstance,
+      this.currentQuestion,
+      this.numberOfQuestions
+    );
+    if (this.currentQuestion + 1 < this.numberOfQuestions) {
+      this.currentQuestion++;
+    } else {
+      this.currentQuestion = 0;
+      this.activeIndex++;
+    }
+  }
+
+  submitAnswer(answer: string) {
+    this.gamification.increaseScore(this.currentInstance.selectionScore);
+    // console.log('Answered:', answer, this.currentQuestion);
     // Simple array with all selected answers
-    const selectedAnswers: string[] = [];
-    this.selection.selectedOptions.selected.forEach(selected => {
-      selectedAnswers.push(selected.value);
-    });
-    this.question.handleSubmittedAnswers(selectedAnswers, currentFeature);
-    this.activeIndex++;
+    // const selectedAnswers: string[] = [];
+    // this.selection.selectedOptions.selected.forEach(selected => {
+    //   selectedAnswers.push(selected.value);
+    // });
+    // this.question.handleSubmittedAnswers(
+    //   selectedAnswers,
+    //   this.currentInstance.objectId
+    // );
+    // this.activeIndex++;
+    this.answerQuestion();
+    this.getNext();
   }
 }
