@@ -51,7 +51,7 @@ export class QuestionRoomComponent implements OnInit {
   }
 
   getNext() {
-    this.question.updateNextInstance();
+    // this.question.updateNextInstance();
   }
 
   answerQuestion(answer: string) {
@@ -71,6 +71,7 @@ export class QuestionRoomComponent implements OnInit {
     console.log(answersToBackend);
     this.communication.sendAnswersBack(answersToBackend).subscribe(res => {
       this.tempAnswers = [];
+      this.question.updateNextInstance();
     });
   }
 
@@ -104,6 +105,6 @@ export class QuestionRoomComponent implements OnInit {
     // );
     // this.activeIndex++;
     this.answerQuestion(answer);
-    this.getNext();
+    // this.getNext();
   }
 }

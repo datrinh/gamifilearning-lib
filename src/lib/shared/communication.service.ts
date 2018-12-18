@@ -1,20 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  JsonFeature,
-  DataObject,
-  ObjectToLabel,
-  BackendResponse,
-  Answer
-} from './data.interface';
+import { JsonFeature, BackendResponse, Answer } from './data.interface';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  NUMBER_OF_UNLABELED_DATA,
-  UNLABELED_INDEX,
-  ENTROPY_INDEX,
-  URL_TO_DATA
-} from '../config';
-import { HttpClient } from '@angular/common/http';
+import { UNLABELED_INDEX, ENTROPY_INDEX, URL_TO_DATA } from '../config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +28,22 @@ export class CommunicationService {
   }
 
   getNextInstance(): Observable<BackendResponse> {
-    return this.http.get<BackendResponse>('assets/mock.dataobject.json');
+    // TODO clean up subscribe chain
+    return this.http.get<BackendResponse>('assets/mock.dataobject.json').pipe(
+      map(obj => {
+        this.http
+          .get<string>('https://icanhazdadjoke.com/', {
+            headers: new HttpHeaders({
+              Accept: 'application/json'
+            })
+          })
+          .subscribe((quote: any) => {
+            obj.text = quote.joke;
+          });
+        obj.objectId = Math.floor(Math.random() * 100);
+        return obj;
+      })
+    );
   }
 
   sendAnswersBack(answer: Answer[]): Observable<boolean> {
