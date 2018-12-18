@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import {
-  CommunicationService,
-  BackendResponse
-} from './communication.service.js';
+import { CommunicationService } from './communication.service.js';
 import {
   JsonFeature,
-  Question,
   Answer,
   DataObject,
-  ObjectToLabel
+  ObjectToLabel,
+  BackendResponse
 } from './data.interface.js';
 import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from '../config.js';
 

@@ -9,16 +9,16 @@ export interface Features {
   '1': { [key: string]: number };
 }
 
-export interface Question {
-  id: string;
-  label: string;
-  customerId: string;
-}
+// export interface Question {
+//   id: string;
+//   label: string;
+//   customerId: string;
+// }
 
 export interface Answer {
   timestamp: string;
-  featureId: string; // is 1 to 1 with questionId?
-  userId: string;
+  objectId: string | number;
+  userId: string | number;
   customerId: string;
   questionId: string;
   answer: string;
@@ -84,4 +84,33 @@ export interface LabelOutput {
   customerId: string;
   /** Options might change in the future */
   answer: 'yes' | 'no' | 'maybe';
+}
+
+export interface BackendResponse {
+  objectId: number;
+  versionId: number;
+  'default-context': string;
+  labeledBy: string[];
+  text: string;
+  toBeLabeled: ToBeLabeled[];
+  displayFeature: string[];
+  reductionAlgorithm: string;
+  selectionScore: number;
+  featuresValues: FeaturesValues;
+  featureRepresentations: { [key: string]: string };
+}
+
+interface FeaturesValues {
+  '1': { [key: string]: number };
+}
+
+interface ToBeLabeled {
+  featureId: string;
+  question: Question;
+}
+
+interface Question {
+  questionId: string;
+  customerId: string;
+  possibleAnswers: string[];
 }
