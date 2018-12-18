@@ -13,17 +13,10 @@ import {
 } from './data.interface.js';
 import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from '../config.js';
 
-export const QUESTIONS = [
-  { id: 'music', label: 'Hat der Text Musikbezug?', customerId: 'gema' },
-  { id: 'event', label: 'Geht es um eine Veranstaltung?', customerId: 'gema' }
-];
-
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  questions: Question[] = QUESTIONS;
-  answers: Answer[] = [];
   data: JsonFeature[] = [];
 
   private currentInstance = new Subject<BackendResponse>();
@@ -32,9 +25,9 @@ export class QuestionService {
   private progress = new BehaviorSubject(0);
   progress$ = this.progress.asObservable();
 
-  private textsStore: JsonFeature[] = [];
-  private texts = new BehaviorSubject([]);
-  texts$ = this.texts.asObservable();
+  // private textsStore: JsonFeature[] = [];
+  // private texts = new BehaviorSubject([]);
+  // texts$ = this.texts.asObservable();
 
   constructor(private communication: CommunicationService) {
     this.updateNextInstance();
@@ -71,14 +64,14 @@ export class QuestionService {
       .slice(0, number);
   }
 
-  startLearning(features) {
-    this.textsStore = this.getTopInstances(features);
-    this.texts.next(this.textsStore);
-  }
+  // startLearning(features) {
+  //   this.textsStore = this.getTopInstances(features);
+  //   this.texts.next(this.textsStore);
+  // }
 
-  getTextByIndex(index: number): JsonFeature {
-    return this.textsStore[index];
-  }
+  // getTextByIndex(index: number): JsonFeature {
+  //   return this.textsStore[index];
+  // }
 
   handleSubmittedAnswers(selectedAnswers: string[], featureId: number) {}
 

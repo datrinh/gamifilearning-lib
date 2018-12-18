@@ -37,20 +37,22 @@
   justify-self: stretch;
 }
 
+.mat-card-header-text {
+  text-align: center;
+  // margin: auto;
+}
+
+.answer-buttons-container {
+  display: flex;
+  & > button {
+    flex-grow: 1;
+  }
+}
+
 .spinner-container {
   mat-spinner {
     margin: auto;
   }
   text-align: center;
-  // display: flex;
-  // & > * {
-  // margin: auto;
-  // margin-top:
-  // }
   align-self: center;
-  // justify-self: center;
-}
-
-app-chart {
-  width: 100%;
 }

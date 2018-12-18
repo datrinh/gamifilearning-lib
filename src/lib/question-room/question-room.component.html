@@ -30,19 +30,37 @@
   </mat-card>
 
   <mat-card class="question-card" *ngIf="!isDone()">
+    <mat-card-header class="question-text">
+      <mat-card-title>{{
+        currentInstance.toBeLabeled[currentQuestion].question.questionId
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="answer-buttons-container">
+      <button
+        mat-button
+        class="answer-button"
+        *ngFor="
+          let answer of currentInstance.toBeLabeled[currentQuestion].question
+            .possibleAnswers
+        "
+        (click)="submitAnswer(answer)"
+      >
+        {{ answer }}
+      </button>
+    </mat-card-content>
+
     <!--
-      <div *ngFor="let q of currentInstance.toBeLabeled[currentQuestion]">
+      <button
+        mat-button
+        *ngFor="
+          let answer of currentInstance.toBeLabeled[currentQuestion].question
+            .possibleAnswers
+        "
+        (click)="submitAnswer(answer)"
+      >
+        {{ answer }}
+      </button>
     -->
-    {{ currentInstance.toBeLabeled[currentQuestion].question.questionId }}
-    <button
-      *ngFor="
-        let answer of currentInstance.toBeLabeled[currentQuestion].question
-          .possibleAnswers
-      "
-      (click)="submitAnswer(answer)"
-    >
-      {{ answer }}
-    </button>
     <!-- </div> -->
   </mat-card>
 

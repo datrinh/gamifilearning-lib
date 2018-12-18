@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from './shared/communication.service';
-import { QUESTIONS } from './shared/question.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -9,8 +8,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class RootComponent implements OnInit {
-  texts = this.communication.loadData().pipe(map(data => data.slice(0, 5)));
-  questions = QUESTIONS;
   constructor(public communication: CommunicationService) {}
 
   ngOnInit() {

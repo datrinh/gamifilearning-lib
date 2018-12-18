@@ -68,6 +68,8 @@ export class QuestionRoomComponent implements OnInit {
     if (this.currentQuestion + 1 < this.numberOfQuestions) {
       this.currentQuestion++;
     } else {
+      // One Iteration of Question-Package done
+
       this.currentQuestion = 0;
       this.activeIndex++;
     }
