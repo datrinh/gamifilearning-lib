@@ -1,14 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
-import {
-  JsonFeature,
-  Answer,
-  ObjectToLabel,
-  BackendResponse
-} from '../shared/data.interface';
-import { ENTROPY_INDEX } from '../config';
+import { Answer, BackendResponse } from '../shared/data.interface';
 import { UserService } from '../shared/user.service';
 import { CommunicationService } from '../shared/communication.service';
 
@@ -23,8 +17,6 @@ export class QuestionRoomComponent implements OnInit {
   activeIndex = 0;
   tempAnswers: Answer[] = [];
 
-  // @Input() texts: JsonFeature[];
-  // @Input() questions: Question[];
   @Input() maxProgress;
   @Input() currentInstance: BackendResponse;
 
@@ -62,13 +54,13 @@ export class QuestionRoomComponent implements OnInit {
       this.currentQuestion++;
     } else {
       // One Iteration of Question-Package done
-      this.sendAnswer(this.currentInstance, answer);
+      this.sendAnswer(answer);
       this.currentQuestion = 0;
       this.activeIndex++;
     }
   }
 
-  sendAnswer(instance, answer: string) {
+  sendAnswer(answer: string) {
     const answersToBackend = this.tempAnswers.concat(this.createAnswer(answer));
     console.log(answersToBackend);
     this.communication.sendAnswersBack(answersToBackend).subscribe(res => {
@@ -95,18 +87,6 @@ export class QuestionRoomComponent implements OnInit {
 
   submitAnswer(answer: string) {
     this.gamification.increaseScore(this.currentInstance.selectionScore);
-    // console.log('Answered:', answer, this.currentQuestion);
-    // Simple array with all selected answers
-    // const selectedAnswers: string[] = [];
-    // this.selection.selectedOptions.selected.forEach(selected => {
-    //   selectedAnswers.push(selected.value);
-    // });
-    // this.question.handleSubmittedAnswers(
-    //   selectedAnswers,
-    //   this.currentInstance.objectId
-    // );
-    // this.activeIndex++;
     this.answerQuestion(answer);
-    // this.getNext();
   }
 }
