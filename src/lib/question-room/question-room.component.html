@@ -3,15 +3,15 @@
     <span class="progress-label">{{ activeIndex }} / {{ maxProgress }}</span>
     <mat-progress-bar
       mode="determinate"
-      value="{{activeIndex / maxProgress *100}}"
+      value="{{ (activeIndex / maxProgress) * 100 }}"
     ></mat-progress-bar>
   </div>
 
   <mat-card class="text-card">
-    <p *ngIf="!isDone(); else: done">{{ currentInstance.text }}</p>
+    <p *ngIf="!isDone(); else done">{{ currentInstance.text }}</p>
     <ng-template #done>
       <div
-        *ngIf="!clicked; else: charts"
+        *ngIf="!clicked; else charts"
         class="spinner-container"
         (click)="clicked = true"
       >

@@ -28,7 +28,7 @@ export class QuestionRoomComponent implements OnInit {
   @Input() maxProgress;
   @Input() currentInstance: BackendResponse;
 
-  numberOfQuestions;
+  numberOfQuestions: number;
 
   @ViewChild('selectionList')
   selection: MatSelectionList;
@@ -41,8 +41,10 @@ export class QuestionRoomComponent implements OnInit {
 
   ngOnInit() {
     this.question.currentInstance$.subscribe(instance => {
-      this.currentInstance = instance;
-      this.numberOfQuestions = this.currentInstance.toBeLabeled.length;
+      if (instance) {
+        this.currentInstance = instance;
+        this.numberOfQuestions = this.currentInstance.toBeLabeled.length;
+      }
     });
   }
 

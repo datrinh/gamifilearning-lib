@@ -16,7 +16,7 @@ import { NUMBER_OF_TEXTS, UNLABELED_INDEX, ENTROPY_INDEX } from '../config.js';
 export class QuestionService {
   data: JsonFeature[] = [];
 
-  private currentInstance = new Subject<BackendResponse>();
+  private currentInstance = new BehaviorSubject<BackendResponse>(null);
   currentInstance$ = this.currentInstance.asObservable();
 
   private progress = new BehaviorSubject(0);
