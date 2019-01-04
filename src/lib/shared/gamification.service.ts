@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 const GIPHY_API_KEY = 'n8VZGDtSpax8HM6j486SScMj5vMcavN2';
+const GIPHY_URL = 'http://api.giphy.com/v1/gifs/search';
 
 @Injectable({
   providedIn: 'root'
@@ -29,15 +30,23 @@ export class GamificationService {
     );
   }
 
-  getPicOfTheDay() {
+  getRandomGif(query: string) {
     return this.http
-      .get('http://api.giphy.com/v1/gifs/trending', {
+      .get(GIPHY_URL, {
         params: {
           api_key: GIPHY_API_KEY,
-          limit: '1',
-          rating: 'g'
+          limit: '50',
+          rating: 'g',
+          q: query
         }
       })
-      .pipe(map((gif: any) => gif.data[0]));
+      .pipe(
+        // get a random gif out of the array of gifs
+        map((gif: any) => this.getRandomElement(gif.data))
+      );
+  }
+
+  private getRandomElement(array: []) {
+    return array[Math.floor(Math.random() * array.length)];
   }
 }

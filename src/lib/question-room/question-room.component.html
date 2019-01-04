@@ -8,7 +8,9 @@
   </div>
 
   <mat-card class="text-card">
-    <p *ngIf="!isDone(); else done">{{ currentInstance.text }}</p>
+    <p *ngIf="!isDone(); else done" [@fadeIn]="activeIndex">
+      {{ currentInstance.text }}
+    </p>
     <ng-template #done>
       <div
         *ngIf="!clicked; else charts"

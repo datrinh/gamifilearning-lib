@@ -5,11 +5,29 @@ import { GamificationService } from '../shared/gamification.service';
 import { Answer, BackendResponse } from '../shared/data.interface';
 import { UserService } from '../shared/user.service';
 import { CommunicationService } from '../shared/communication.service';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+  keyframes
+} from '@angular/animations';
 
 @Component({
   selector: 'gl-question-room',
   templateUrl: './question-room.component.html',
-  styleUrls: ['./question-room.component.scss']
+  styleUrls: ['./question-room.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':increment', [
+        animate(
+          '300ms',
+          keyframes([style({ opacity: '0' }), style({ opacity: '1' })])
+        )
+      ])
+    ])
+  ]
 })
 export class QuestionRoomComponent implements OnInit {
   clicked = false;
