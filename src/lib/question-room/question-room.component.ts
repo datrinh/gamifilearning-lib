@@ -3,7 +3,6 @@ import { QuestionService } from '../shared/question.service';
 import { MatSelectionList } from '@angular/material/list';
 import { GamificationService } from '../shared/gamification.service';
 import { Answer, BackendResponse } from '../shared/data.interface';
-import { UserService } from '../shared/user.service';
 import { CommunicationService } from '../shared/communication.service';
 import {
   trigger,
@@ -11,7 +10,6 @@ import {
   style,
   animate,
   keyframes,
-  state,
   useAnimation
 } from '@angular/animations';
 import { pulseAnimation } from '../shared/animations';
@@ -71,7 +69,6 @@ export class QuestionRoomComponent implements OnInit {
     private question: QuestionService,
     private gamification: GamificationService,
     private communication: CommunicationService,
-    private user: UserService,
     private dialog: MatDialog
   ) {}
 
@@ -97,13 +94,7 @@ export class QuestionRoomComponent implements OnInit {
       this.sendAnswer(answer);
       this.currentQuestion = 0;
       this.activeIndex++;
-      this.rewards
-        .filter(reward => reward.unlocked === false)
-        .forEach(reward => {
-          if ((this.activeIndex / this.maxProgress) * 100 >= reward.position) {
-            reward.unlocked = true;
-          }
-        });
+      this.checkRewards();
     }
   }
 
@@ -136,6 +127,16 @@ export class QuestionRoomComponent implements OnInit {
       // userId: this.user.getCurrentUserId()
     };
     return newAnswer;
+  }
+
+  private checkRewards() {
+    this.rewards
+      .filter(reward => reward.unlocked === false)
+      .forEach(reward => {
+        if ((this.activeIndex / this.maxProgress) * 100 >= reward.position) {
+          reward.unlocked = true;
+        }
+      });
   }
 
   submitAnswer(answer: string) {
