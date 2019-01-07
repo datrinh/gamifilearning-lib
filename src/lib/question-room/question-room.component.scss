@@ -4,6 +4,10 @@
   grid-template-columns: 1fr;
 }
 
+.question-text {
+  justify-content: center;
+}
+
 .progressbar-container {
   grid-row: 1 / 2;
   align-self: center;

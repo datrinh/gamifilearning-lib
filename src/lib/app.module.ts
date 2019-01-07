@@ -31,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScoreDisplayComponent } from './score-display/score-display.component';
 import { FormsModule } from '@angular/forms';
 import { RewardDialogComponent } from './reward-dialog/reward-dialog.component';
+import { TranslatePipe } from './shared/translate.pipe';
 
 const MaterialModules = [
   MatInputModule,
@@ -58,7 +59,8 @@ const MaterialModules = [
     NavbarComponent,
     ChartComponent,
     ScoreDisplayComponent,
-    RewardDialogComponent
+    RewardDialogComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
