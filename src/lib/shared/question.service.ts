@@ -13,9 +13,6 @@ export class QuestionService {
   private currentInstance = new BehaviorSubject<BackendResponse>(null);
   currentInstance$ = this.currentInstance.asObservable();
 
-  private progress = new BehaviorSubject(0);
-  progress$ = this.progress.asObservable();
-
   constructor(private communication: CommunicationService) {
     this.updateNextInstance();
   }

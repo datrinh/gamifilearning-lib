@@ -12,6 +12,10 @@ const GIPHY_URL = 'http://api.giphy.com/v1/gifs/search';
 export class GamificationService {
   private score = new BehaviorSubject(0);
   score$ = this.score.asObservable();
+
+  private progress = new BehaviorSubject(0);
+  progress$ = this.progress.asObservable();
+
   constructor(private http: HttpClient) {
     this.fetchScore().subscribe(score => this.score.next(score));
   }

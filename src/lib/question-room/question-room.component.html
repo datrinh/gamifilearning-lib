@@ -1,10 +1,20 @@
 <section class="content" *ngIf="currentInstance">
   <div class="progressbar-container">
     <span class="progress-label">{{ activeIndex }} / {{ maxProgress }}</span>
+
     <mat-progress-bar
       mode="determinate"
       value="{{ (activeIndex / maxProgress) * 100 }}"
     ></mat-progress-bar>
+    <div *ngFor="let reward of rewards">
+      <mat-icon
+        [@unlockReward]="reward.unlocked"
+        class="reward-icon"
+        [ngClass]="{ unlocked: reward.unlocked }"
+        [ngStyle]="{ 'left.%': reward.position }"
+        >{{ reward.icon }}</mat-icon
+      >
+    </div>
   </div>
 
   <mat-card class="text-card">

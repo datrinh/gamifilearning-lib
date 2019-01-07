@@ -10,9 +10,18 @@ import {
   transition,
   style,
   animate,
+  keyframes,
   state,
-  keyframes
+  useAnimation
 } from '@angular/animations';
+import { pulseAnimation } from '../shared/animations';
+
+export interface Reward {
+  position: number;
+  unlocked: boolean;
+  // label: string;
+  icon: string;
+}
 
 @Component({
   selector: 'gl-question-room',
@@ -26,6 +35,16 @@ import {
           keyframes([style({ opacity: '0' }), style({ opacity: '1' })])
         )
       ])
+    ]),
+    trigger('unlockReward', [
+      transition('false => true', [
+        useAnimation(pulseAnimation, {
+          params: {
+            timings: '400ms cubic-bezier(.11,.99,.83,.43)',
+            scale: 1.5
+          }
+        })
+      ])
     ])
   ]
 })
@@ -37,6 +56,10 @@ export class QuestionRoomComponent implements OnInit {
 
   @Input() maxProgress;
   @Input() currentInstance: BackendResponse;
+  @Input() rewards: Reward[] = [
+    { icon: 'whatshot', position: 34, unlocked: false },
+    { icon: 'whatshot', position: 67, unlocked: false }
+  ];
 
   numberOfQuestions: number;
 
@@ -62,10 +85,6 @@ export class QuestionRoomComponent implements OnInit {
     return !(this.activeIndex < this.maxProgress);
   }
 
-  getNext() {
-    // this.question.updateNextInstance();
-  }
-
   answerQuestion(answer: string) {
     if (this.currentQuestion + 1 < this.numberOfQuestions) {
       this.tempAnswers = [...this.tempAnswers, this.createAnswer(answer)];
@@ -75,6 +94,13 @@ export class QuestionRoomComponent implements OnInit {
       this.sendAnswer(answer);
       this.currentQuestion = 0;
       this.activeIndex++;
+      this.rewards
+        .filter(reward => reward.unlocked === false)
+        .forEach(reward => {
+          if ((this.activeIndex / this.maxProgress) * 100 >= reward.position) {
+            reward.unlocked = true;
+          }
+        });
     }
   }
 
