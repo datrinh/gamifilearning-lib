@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -10,14 +10,15 @@ const GIPHY_URL = 'http://api.giphy.com/v1/gifs/search';
   providedIn: 'root'
 })
 export class GamificationService {
-  private currentScore = 500;
-  private score = new BehaviorSubject(this.currentScore);
+  private score = new BehaviorSubject(0);
   score$ = this.score.asObservable();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchScore().subscribe(score => this.score.next(score));
+  }
 
   increaseScore(weight: number) {
-    this.currentScore = this.currentScore + Math.floor(weight * 100);
-    this.score.next(this.currentScore);
+    this.doIncreaseScore(weight).subscribe(score => this.score.next(score));
+    // this.score.next(this.score.value + Math.floor(weight * 100));
   }
 
   getTrivia(date: Date = new Date()) {
@@ -41,12 +42,23 @@ export class GamificationService {
         }
       })
       .pipe(
-        // get a random gif out of the array of gifs
+        // chose a random gif out of the array of gifs
         map((gif: any) => this.getRandomElement(gif.data))
       );
   }
 
-  private getRandomElement(array: []) {
+  // currently mocked. Should be persisted in backend later
+  private fetchScore() {
+    return of(500);
+  }
+
+  // currently mocked too
+  private doIncreaseScore(weight: number) {
+    return of(this.score.value + Math.floor(weight * 100));
+  }
+
+  /** Helper function to chose a random element from an array */
+  private getRandomElement<T>(array: T[]): T {
     return array[Math.floor(Math.random() * array.length)];
   }
 }
