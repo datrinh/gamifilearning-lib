@@ -15,6 +15,8 @@ import {
   useAnimation
 } from '@angular/animations';
 import { pulseAnimation } from '../shared/animations';
+import { MatDialog } from '@angular/material';
+import { RewardDialogComponent } from '../reward-dialog/reward-dialog.component';
 
 export interface Reward {
   position: number;
@@ -69,7 +71,8 @@ export class QuestionRoomComponent implements OnInit {
     private question: QuestionService,
     private gamification: GamificationService,
     private communication: CommunicationService,
-    private user: UserService
+    private user: UserService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -111,6 +114,12 @@ export class QuestionRoomComponent implements OnInit {
       this.tempAnswers = [];
       this.question.updateNextInstance();
     });
+  }
+
+  claimReward(isUnlocked: boolean) {
+    if (isUnlocked) {
+      this.dialog.open(RewardDialogComponent);
+    }
   }
 
   private createAnswer(answer: string): Answer {

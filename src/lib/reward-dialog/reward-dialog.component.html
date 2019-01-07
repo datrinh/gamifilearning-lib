@@ -1,0 +1,8 @@
+<h1>Today's random fact</h1>
+<p>{{ trivia | async }}</p>
+<h2>And also</h2>
+<img
+  src="{{ (pic | async)?.images.original.url }}"
+  alt="gif_reward"
+  width="100%"
+/>

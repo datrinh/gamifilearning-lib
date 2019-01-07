@@ -19,7 +19,8 @@ import {
   MatToolbarModule,
   MatBadgeModule,
   MatListModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTooltipModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
@@ -29,6 +30,7 @@ import { ChartComponent } from './chart/chart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScoreDisplayComponent } from './score-display/score-display.component';
 import { FormsModule } from '@angular/forms';
+import { RewardDialogComponent } from './reward-dialog/reward-dialog.component';
 
 const MaterialModules = [
   MatInputModule,
@@ -43,7 +45,8 @@ const MaterialModules = [
   MatToolbarModule,
   MatBadgeModule,
   MatListModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTooltipModule
 ];
 
 @NgModule({
@@ -54,7 +57,8 @@ const MaterialModules = [
     QuestionRoomComponent,
     NavbarComponent,
     ChartComponent,
-    ScoreDisplayComponent
+    ScoreDisplayComponent,
+    RewardDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,6 @@ const MaterialModules = [
   providers: [],
   bootstrap: [RootComponent],
   exports: [RootComponent, QuestionRoomComponent, ScoreDisplayComponent],
-  entryComponents: [QuestionRoomComponent]
+  entryComponents: [QuestionRoomComponent, RewardDialogComponent]
 })
 export class GLModule {}

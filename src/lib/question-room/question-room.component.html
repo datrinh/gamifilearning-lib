@@ -12,6 +12,9 @@
         class="reward-icon"
         [ngClass]="{ unlocked: reward.unlocked }"
         [ngStyle]="{ 'left.%': reward.position }"
+        (click)="claimReward(reward.unlocked)"
+        matTooltip="Not unlocked yet!"
+        [matTooltipDisabled]="reward.unlocked"
         >{{ reward.icon }}</mat-icon
       >
     </div>
