@@ -113,6 +113,27 @@ export class QuestionRoomComponent implements OnInit {
     }
   }
 
+  /**
+   * Handle keyboard interaction
+   * Only working hardcoded for yes,no,maybe
+   */
+  onKey(event: KeyboardEvent) {
+    console.log(event);
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.submitAnswer('yes');
+        break;
+      case 'ArrowRight':
+        this.submitAnswer('no');
+        break;
+      case 'ArrowUp':
+        this.submitAnswer('maybe');
+        break;
+      default:
+        return null;
+    }
+  }
+
   private createAnswer(answer: string): Answer {
     let newAnswer: Answer;
     newAnswer = {

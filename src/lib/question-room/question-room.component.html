@@ -1,4 +1,9 @@
-<section class="content" *ngIf="currentInstance">
+<section
+  (keyup)="onKey($event)"
+  class="content"
+  *ngIf="currentInstance"
+  tabindex="-1"
+>
   <div class="progressbar-container">
     <span class="progress-label">{{ activeIndex }} / {{ maxProgress }}</span>
 
@@ -68,31 +73,5 @@
         {{ answer | translate }}
       </button>
     </mat-card-content>
-
-    <!--
-      <button
-        mat-button
-        *ngFor="
-          let answer of currentInstance.toBeLabeled[currentQuestion].question
-            .possibleAnswers
-        "
-        (click)="submitAnswer(answer)"
-      >
-        {{ answer }}
-      </button>
-    -->
-    <!-- </div> -->
   </mat-card>
-
-  <!--
-    <button
-      *ngIf="!isDone()"
-      mat-raised-button
-      class="submit-button"
-      (click)="submitAnswer()"
-      color="primary"
-    >
-      Weiter
-    </button>
-  -->
 </section>
