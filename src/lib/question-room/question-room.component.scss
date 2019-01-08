@@ -6,6 +6,9 @@
 
 .question-text {
   justify-content: center;
+  mat-card-title {
+    font-weight: normal;
+  }
 }
 
 .progressbar-container {

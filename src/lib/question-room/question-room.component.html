@@ -46,10 +46,14 @@
 
   <mat-card class="question-card" *ngIf="!isDone()">
     <mat-card-header class="question-text">
-      <mat-card-title>{{
-        currentInstance.toBeLabeled[currentQuestion].question.questionId
-          | translate
-      }}</mat-card-title>
+      <mat-card-title>
+        <span
+          [innerHtml]="
+            currentInstance.toBeLabeled[currentQuestion].question.questionId
+              | translate
+          "
+        ></span>
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content class="answer-buttons-container">
       <button
@@ -61,7 +65,7 @@
         "
         (click)="submitAnswer(answer)"
       >
-        {{ answer }}
+        {{ answer | translate }}
       </button>
     </mat-card-content>
 
