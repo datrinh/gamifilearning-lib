@@ -63,7 +63,17 @@
 
 .answer-buttons-container {
   display: flex;
-  & > button {
+  .answer-button {
+  }
+  .yes {
+    color: green;
+    flex-grow: 1;
+  }
+  .maybe {
+    flex-grow: 0.5;
+  }
+  .no {
+    color: red;
     flex-grow: 1;
   }
 }

@@ -63,11 +63,12 @@
     <mat-card-content class="answer-buttons-container">
       <button
         mat-button
-        class="answer-button"
         *ngFor="
           let answer of currentInstance.toBeLabeled[currentQuestion].question
             .possibleAnswers
         "
+        class="answer-button"
+        [ngClass]="answer"
         (click)="submitAnswer(answer)"
       >
         {{ answer | translate }}
