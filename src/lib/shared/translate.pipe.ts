@@ -10,7 +10,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TranslatePipe implements PipeTransform {
   transform(value: string, args?: any): any {
-    console.log(value);
     switch (value) {
       case 'isEvent':
         return 'Handelt der Text von einem <b>Event</b>?';

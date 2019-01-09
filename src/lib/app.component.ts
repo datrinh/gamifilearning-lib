@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommunicationService } from './shared/communication.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'gl-root',
@@ -8,7 +6,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class RootComponent implements OnInit {
-  constructor(public communication: CommunicationService) {}
+  constructor() {}
 
   ngOnInit() {
     // this.communication.loadData().subscribe(res => {

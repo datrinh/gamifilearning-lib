@@ -16,10 +16,7 @@ export interface Features {
 // }
 
 export interface Answer {
-  timestamp: string;
-  objectId: string | number;
-  userId: string | number;
-  customerId: string;
+  documentId: string;
   questionId: string;
   answer: string;
 }
@@ -87,7 +84,7 @@ export interface LabelOutput {
 }
 
 export interface BackendResponse {
-  objectId: number;
+  objectId: number | string;
   versionId: number;
   'default-context': string;
   labeledBy: string[];
