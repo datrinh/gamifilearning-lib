@@ -31,7 +31,11 @@ export interface Reward {
       transition(':increment', [
         animate(
           '300ms',
-          keyframes([style({ opacity: '0' }), style({ opacity: '1' })])
+          keyframes([
+            style({ opacity: '1' }),
+            style({ opacity: '0' }),
+            style({ opacity: '1' })
+          ])
         )
       ])
     ]),
