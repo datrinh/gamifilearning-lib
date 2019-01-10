@@ -64,14 +64,14 @@
 .answer-buttons-container {
   display: flex;
   .yes {
-    color: green;
+    // color: green;
     flex-grow: 1;
   }
   .maybe {
     flex-grow: 0.5;
   }
   .no {
-    color: red;
+    // color: red;
     flex-grow: 1;
   }
 }

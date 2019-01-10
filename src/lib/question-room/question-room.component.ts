@@ -117,12 +117,8 @@ export class QuestionRoomComponent implements OnInit {
     let newAnswer: Answer;
     newAnswer = {
       answer: answer,
-      // customerId: 'gema',
       documentId: this.currentInstance.id,
-      // questionId: this.currentInstance.toBeLabeled[this.currentQuestion]
-      //   .question.questionId
       questionId: this.questions[this.currentQuestion]
-      // timestamp: new Date().toDateString(),
       // userId: '1'
       // Todo: User Service in lib after all?
       // userId: this.user.getCurrentUserId()
