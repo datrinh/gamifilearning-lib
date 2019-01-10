@@ -48,18 +48,16 @@ export interface Reward {
   ]
 })
 export class QuestionRoomComponent implements OnInit {
-  clicked = false;
   currentQuestion = 0;
-  activeIndex = 0;
+  // activeIndex = 0;
   tempAnswers: Answer[] = [];
 
-  @Input() maxProgress;
-  @Input() currentInstance: BackendResponse;
-  @Input() rewards: Reward[] = [
-    { icon: 'whatshot', position: 34, unlocked: false },
-    { icon: 'whatshot', position: 67, unlocked: false }
-  ];
+  @Input() maxProgress: number;
+  @Input() done: number;
+  @Input() currentInstance: any;
+  @Input() rewards: Reward[];
   @Input() questions: string[];
+  @Input() answers: string[];
 
   // numberOfQuestions: number;
 
@@ -72,38 +70,15 @@ export class QuestionRoomComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.question.currentInstance$.subscribe(instance => {
-    //   if (instance) {
-    //     this.currentInstance = instance;
-    // this.numberOfQuestions = this.currentInstance.toBeLabeled.length;
-    //   }
-    // });
+    this.checkRewards();
   }
 
   isDone(): boolean {
-    return !(this.activeIndex < this.maxProgress);
-  }
-
-  answerQuestion(answer: string) {
-    if (this.currentQuestion + 1 < this.questions.length) {
-      this.tempAnswers = [...this.tempAnswers, this.createAnswer(answer)];
-      this.currentQuestion++;
-    } else {
-      // One Iteration of Question-Package done
-      this.sendAnswer(answer);
-      this.currentQuestion = 0;
-      this.activeIndex++;
-      this.checkRewards();
-    }
+    return !(this.done < this.maxProgress);
   }
 
   sendAnswer(answer: string) {
     const answersToBackend = this.tempAnswers.concat(this.createAnswer(answer));
-    console.log(answersToBackend);
-    // this.communication.sendAnswersBack(answersToBackend).subscribe(res => {
-    //   this.tempAnswers = [];
-    //   this.question.updateNextInstance();
-    // });
     this.tempAnswers = [];
     this.question.handleSubmittedAnswers(answersToBackend);
   }
@@ -119,7 +94,6 @@ export class QuestionRoomComponent implements OnInit {
    * Only working hardcoded for yes,no,maybe
    */
   onKey(event: KeyboardEvent) {
-    console.log(event);
     switch (event.key) {
       case 'ArrowLeft':
         this.submitAnswer('yes');
@@ -140,9 +114,10 @@ export class QuestionRoomComponent implements OnInit {
     newAnswer = {
       answer: answer,
       // customerId: 'gema',
-      documentId: this.currentInstance.objectId.toString(),
-      questionId: this.currentInstance.toBeLabeled[this.currentQuestion]
-        .question.questionId
+      documentId: this.currentInstance.id,
+      // questionId: this.currentInstance.toBeLabeled[this.currentQuestion]
+      //   .question.questionId
+      questionId: this.questions[this.currentQuestion]
       // timestamp: new Date().toDateString(),
       // userId: '1'
       // Todo: User Service in lib after all?
@@ -155,14 +130,23 @@ export class QuestionRoomComponent implements OnInit {
     this.rewards
       .filter(reward => reward.unlocked === false)
       .forEach(reward => {
-        if ((this.activeIndex / this.maxProgress) * 100 >= reward.position) {
+        if ((this.done / this.maxProgress) * 100 >= reward.position) {
           reward.unlocked = true;
         }
       });
   }
 
   submitAnswer(answer: string) {
-    this.gamification.increaseScore(this.currentInstance.selectionScore);
-    this.answerQuestion(answer);
+    // this.gamification.increaseScore(this.currentInstance.selectionScore);
+    if (this.currentQuestion + 1 < this.questions.length) {
+      this.tempAnswers = [...this.tempAnswers, this.createAnswer(answer)];
+      this.currentQuestion++;
+    } else {
+      // One Iteration of Question-Package done
+      this.sendAnswer(answer);
+      this.currentQuestion = 0;
+      this.done++;
+      this.checkRewards();
+    }
   }
 }

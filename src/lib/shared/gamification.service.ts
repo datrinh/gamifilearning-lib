@@ -26,7 +26,6 @@ export class GamificationService {
   }
 
   getTrivia(date: Date = new Date()) {
-    console.log(date.getMonth(), date.getDate());
     return this.http.get(
       `http://numbersapi.com/${date.getMonth() + 1}/${date.getDate()}/date`,
       {

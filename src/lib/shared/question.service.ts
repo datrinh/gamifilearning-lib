@@ -23,12 +23,6 @@ export class QuestionService {
     return data.filter(feature => feature.features[1][UNLABELED_INDEX] != null);
   }
 
-  // updateNextInstance() {
-  //   this.communication.getNextInstance().subscribe(instance => {
-  //     this.currentInstance.next(instance);
-  //   });
-  // }
-
   /**
    * Return top scoring data objects
    * @param data corresponding data set
@@ -53,35 +47,4 @@ export class QuestionService {
   handleSubmittedAnswers(answers: Answer[]) {
     this.answers.next(answers);
   }
-
-  // handleSubmittedAnswers(
-  //   selectedAnswers: string[],
-  //   feature: JsonFeature
-  // ): void {
-  //   this.answers = [
-  //     ...this.answers,
-  //     this.createAnswers(selectedAnswers, feature.id)
-  //   ];
-  //   console.log(this.answers);
-  // }
-
-  // private createAnswers(selectedAnswers: string[], id: number): Answer {
-  //   // push a new empty element to avoid undefined
-  //   const answer: Answer = {
-  //     featureId: id,
-  //     answers: {}
-  //   };
-  //   // fill out answers for each question
-
-  //   this.questions.forEach(question => {
-  //     if (
-  //       selectedAnswers.find(selectedAnswer => selectedAnswer === question.id)
-  //     ) {
-  //       answer.answers[question.id] = true;
-  //     } else {
-  //       answer.answers[question.id] = false;
-  //     }
-  //   });
-  //   return answer;
-  // }
 }

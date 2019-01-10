@@ -5,11 +5,11 @@
   tabindex="-1"
 >
   <div class="progressbar-container">
-    <span class="progress-label">{{ activeIndex }} / {{ maxProgress }}</span>
+    <span class="progress-label">{{ done }} / {{ maxProgress }}</span>
 
     <mat-progress-bar
       mode="determinate"
-      value="{{ (activeIndex / maxProgress) * 100 }}"
+      value="{{ (done / maxProgress) * 100 }}"
     ></mat-progress-bar>
     <div *ngFor="let reward of rewards">
       <mat-icon
@@ -26,47 +26,27 @@
   </div>
 
   <mat-card class="text-card">
-    <p *ngIf="!isDone(); else done" [@fadeIn]="activeIndex">
+    <p *ngIf="!isDone(); else labelingDone" [@fadeIn]="done">
       {{ currentInstance.text }}
     </p>
-    <ng-template #done>
-      <div
-        *ngIf="!clicked; else charts"
-        class="spinner-container"
-        (click)="clicked = true"
-      >
+    <ng-template #labelingDone>
+      <div class="spinner-container">
         <mat-spinner></mat-spinner>
         <p>Verarbeite Daten...</p>
       </div>
-    </ng-template>
-
-    <ng-template #charts>
-      <!-- <app-chart></app-chart> -->
-      <img
-        src="https://media.giphy.com/media/nEMmyUp4hl1QOzovKh/giphy.gif"
-        alt="Thanks!"
-      />
     </ng-template>
   </mat-card>
 
   <mat-card class="question-card" *ngIf="!isDone()">
     <mat-card-header class="question-text">
       <mat-card-title>
-        <span
-          [innerHtml]="
-            currentInstance.toBeLabeled[currentQuestion].question.questionId
-              | translate
-          "
-        ></span>
+        <span [innerHtml]="questions[currentQuestion] | translate"></span>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="answer-buttons-container">
       <button
         mat-button
-        *ngFor="
-          let answer of currentInstance.toBeLabeled[currentQuestion].question
-            .possibleAnswers
-        "
+        *ngFor="let answer of answers"
         class="answer-button"
         [ngClass]="answer"
         (click)="submitAnswer(answer)"

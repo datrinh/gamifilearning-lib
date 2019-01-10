@@ -27,27 +27,27 @@ export class CommunicationService {
     return features;
   }
 
-  getNextInstance(): Observable<BackendResponse> {
-    // TODO clean up subscribe chain
-    return this.http.get<BackendResponse>('assets/mock.dataobject.json').pipe(
-      map(obj => {
-        this.http
-          .get<string>('https://icanhazdadjoke.com/', {
-            headers: new HttpHeaders({
-              Accept: 'application/json'
-            })
-          })
-          .subscribe((quote: any) => {
-            obj.text = quote.joke;
-          });
-        obj.objectId = Math.floor(Math.random() * 100);
-        return obj;
-      })
-    );
-  }
+  // getNextInstance(): Observable<BackendResponse> {
+  //   // TODO clean up subscribe chain
+  //   return this.http.get<BackendResponse>('assets/mock.dataobject.json').pipe(
+  //     map(obj => {
+  //       this.http
+  //         .get<string>('https://icanhazdadjoke.com/', {
+  //           headers: new HttpHeaders({
+  //             Accept: 'application/json'
+  //           })
+  //         })
+  //         .subscribe((quote: any) => {
+  //           obj.text = quote.joke;
+  //         });
+  //       obj.objectId = Math.floor(Math.random() * 100);
+  //       return obj;
+  //     })
+  //   );
+  // }
 
-  sendAnswersBack(answer: Answer[]): Observable<boolean> {
-    // Fake connection
-    return of(true);
-  }
+  // sendAnswersBack(answer: Answer[]): Observable<boolean> {
+  //   // Fake connection
+  //   return of(true);
+  // }
 }
