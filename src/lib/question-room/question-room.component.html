@@ -43,16 +43,18 @@
         <span [innerHtml]="questions[currentQuestion] | translate"></span>
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content class="answer-buttons-container">
-      <button
-        mat-stroked-button
-        *ngFor="let answer of answers"
-        class="answer-button"
-        [ngClass]="answer"
-        (click)="submitAnswer(answer)"
-      >
-        {{ answer | translate }}
-      </button>
+    <mat-card-content>
+      <mat-card-actions class="answer-buttons-container">
+        <button
+          mat-button
+          *ngFor="let answer of answers"
+          class="answer-button"
+          [ngClass]="answer"
+          (click)="submitAnswer(answer)"
+        >
+          {{ answer | translate }}
+        </button>
+      </mat-card-actions>
     </mat-card-content>
   </mat-card>
 </section>
