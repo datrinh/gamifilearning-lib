@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -17,7 +15,7 @@ export interface User {
 export class UserService {
   user: User;
 
-  constructor(private apollo: Apollo, private router: Router) {}
+  constructor() {}
 
   // login(username: string, password: string): Observable<User> {
   //   return this.apollo
