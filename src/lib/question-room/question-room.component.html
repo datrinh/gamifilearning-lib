@@ -4,19 +4,21 @@
   *ngIf="currentInstance"
   tabindex="-1"
 >
-  <div class="progressbar-container">
+  <div class="progressbar-container" *ngIf="showProgressbar">
     <span class="progress-label">{{ done }} / {{ maxProgress }}</span>
 
     <mat-progress-bar
       mode="determinate"
       value="{{ (done / maxProgress) * 100 }}"
     ></mat-progress-bar>
-    <div *ngFor="let reward of rewards">
+    <div
+      class="reward-icon"
+      *ngFor="let reward of rewards"
+      [ngStyle]="{ 'left.%': reward.position }"
+    >
       <mat-icon
         [@unlockReward]="reward.unlocked"
-        class="reward-icon"
         [ngClass]="{ unlocked: reward.unlocked }"
-        [ngStyle]="{ 'left.%': reward.position }"
         (click)="claimReward(reward.unlocked)"
         matTooltip="Not unlocked yet!"
         [matTooltipDisabled]="reward.unlocked"

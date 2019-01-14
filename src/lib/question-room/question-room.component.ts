@@ -53,7 +53,6 @@ export interface Reward {
 })
 export class QuestionRoomComponent implements OnInit {
   currentQuestion = 0;
-  // activeIndex = 0;
   tempAnswers: Answer[] = [];
 
   @Input() maxProgress: number;
@@ -62,8 +61,7 @@ export class QuestionRoomComponent implements OnInit {
   @Input() rewards: Reward[];
   @Input() questions: string[];
   @Input() answers: string[];
-
-  // numberOfQuestions: number;
+  @Input() showProgressbar = true;
 
   @ViewChild('selectionList')
   selection: MatSelectionList;

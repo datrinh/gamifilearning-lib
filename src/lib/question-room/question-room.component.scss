@@ -17,14 +17,18 @@
 .progressbar-container {
   grid-row: 1 / 2;
   align-self: center;
+  position: relative;
   text-align: center;
   // width: 100%;
   // grid-column: 1 / 2;
 
   .reward-icon {
-    color: grey;
+    display: block;
     position: absolute;
+    transform: translateX(-50%);
+    color: grey;
     cursor: pointer;
+    // margin-left: -12px; // half its width: 24px
   }
   .unlocked {
     color: blue;
